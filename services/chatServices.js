@@ -1,7 +1,7 @@
-const Chat = require("../mongooseModels/Chat");
-const Message = require("../mongooseModels/Message");
+import Chat from "../mongooseModels/Chat.js";
+import Message from "../mongooseModels/Message.js";
 
-const accessChat = async (req, res) => {
+export const accessChat = async (req, res) => {
   const { userId1, userId2 } = req.body;
   try {
     let chat = await Chat.findOne({
@@ -18,7 +18,7 @@ const accessChat = async (req, res) => {
   }
 };
 
-const fetchChats = async (req, res) => {
+export const fetchChats = async (req, res) => {
   try {
     const chats = await Chat.find({ users: { $in: [req.query.userId] } })
       .populate("users", "username profilePicture")
@@ -30,7 +30,7 @@ const fetchChats = async (req, res) => {
   }
 };
 
-const createGroupChat = async (req, res) => {
+export const createGroupChat = async (req, res) => {
   const { users, chatName, adminId } = req.body;
   try {
     const groupChat = await Chat.create({
@@ -45,7 +45,7 @@ const createGroupChat = async (req, res) => {
   }
 };
 
-const sendMessage = async (req, res) => {
+export const sendMessage = async (req, res) => {
   const { senderId, content, chatId } = req.body;
   try {
     const message = await Message.create({
@@ -62,7 +62,7 @@ const sendMessage = async (req, res) => {
   }
 };
 
-const fetchMessages = async (req, res) => {
+export const fetchMessages = async (req, res) => {
   try {
     const messages = await Message.find({ chat: req.params.chatId })
       .populate("sender", "username profilePicture");
@@ -71,5 +71,3 @@ const fetchMessages = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-module.exports = { accessChat, fetchChats, createGroupChat, sendMessage, fetchMessages };

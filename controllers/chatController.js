@@ -1,5 +1,5 @@
-const express = require('express');
-const { accessChat, fetchChats, createGroupChat, sendMessage, fetchMessages } = require('../services/chatServices');
+import express from 'express';
+import { accessChat, fetchChats, createGroupChat, sendMessage, fetchMessages } from '../services/chatServices.js';
 
 const router = express.Router();
 
@@ -9,4 +9,4 @@ router.post('/group', createGroupChat); // Create group chat
 router.post('/message', sendMessage); // Send message
 router.get('/message/:chatId', fetchMessages); // Get messages for a chat
 
-module.exports = router;
+export default router;

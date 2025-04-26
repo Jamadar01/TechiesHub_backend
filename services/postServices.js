@@ -1,4 +1,4 @@
-const Post = require("../mongooseModels/Post");
+import Post from "../mongooseModels/Post.js";
 
 export const createPost = async (req, res) => {
   const { postedBy, content } = req.body;
@@ -70,4 +70,5 @@ export const getUserPosts = async (req, res) => {
   }
 };
 
-module.exports = { createPost, getPosts };
+
+

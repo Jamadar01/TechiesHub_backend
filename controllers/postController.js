@@ -1,5 +1,13 @@
-const express = require('express');
-const { createPost, getPosts,likePost, unlikePost, commentPost ,getUserPosts} = require('../services/postServices');
+import express from 'express';
+import { 
+  createPost, 
+  getPosts,
+  likePost,
+  unlikePost,
+  commentPost,
+  getUserPosts 
+} from '../services/postServices.js';
+import { upload } from '../middleware/uploadMiddleware.js';
 
 const router = express.Router();
 
@@ -9,4 +17,5 @@ router.post('/like', likePost);
 router.post('/unlike', unlikePost);
 router.post('/comment', commentPost);
 router.get('/user/:userId', getUserPosts);
-module.exports = router;
+
+export default router;

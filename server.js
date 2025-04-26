@@ -1,15 +1,20 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const path =require('path');
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from 'url'; // <-- for __dirname and __filename in ESM
+
+import authRoutes from './controllers/authContoller.js';
+import postRoutes from './controllers/postController.js';
+import chatRoutes from './controllers/chatController.js';
 
 dotenv.config();
 const app = express();
-const authRoutes = require('./controllers/authContoller');
-const postRoutes = require('./controllers/postController');
-const chatRoutes = require('./controllers/chatController');
 
+// Handling __dirname (because __dirname is not available in ESM)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(express.json());
 app.use(cors());
@@ -17,10 +22,13 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
+
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/chat', chatRoutes);
-app.use('/uploads', express.static(path.join(path.resolve(), '/uploads')));
+
+// Serving static files
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // Connect to MongoDB
 mongoose
