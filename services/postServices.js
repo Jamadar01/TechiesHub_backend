@@ -1,7 +1,9 @@
 import Post from "../mongooseModels/Post.js";
 
 export const createPost = async (req, res) => {
-  const { postedBy, content } = req.body;
+  const content  = req.body.content;
+  const postedBy=req.userId
+  console.log("req.userId",postedBy)
   const image = req.file ? req.file.filename : null;
 
   try {
